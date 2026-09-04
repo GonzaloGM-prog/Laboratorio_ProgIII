@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poncho Digital - Contacto</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+    rel="stylesheet" 
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+    crossorigin="anonymous">
+</head>
+
+<body>
+
+    <header>
+        <h1 class="p-2">PONCHO DIGITAL</h1>
+        <h2 class="p-2">Contacto</h2>
+        <p class="p-2">Estamos para ayudarte.</p>
+    </header>
+
+    <nav class="container">
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="solicitud.html">Postularme</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="productos.html">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="contactos.html">Contacto</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="container my-5">
+        <div class="row g-4">
+
+            
+            <section class="col-md-5">
+                <div class="card p-4 h-100">
+
+                
+                    <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+                        <img src="../img/atencion-al-cliente.png" alt="Atención" class="icono-titulo">
+                        <h2 class="m-0">Información de contacto</h2>
+                    </div>
+
+                    <p>
+                        Si tenés alguna consulta sobre la Fiesta del Poncho,
+                        los artesanos, los productos o los stands, podés
+                        comunicarte con nosotros.
+                    </p>
+
+                    <ul class="list-group my-3">
+                        <li class="list-group-item">
+                            <strong>Email:</strong><br>
+                            contacto@ponchodigital.com
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Teléfono:</strong><br>
+                            3834-123456
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Ubicación:</strong><br>
+                            Catamarca, Argentina
+                        </li>
+                    </ul>
+
+                    
+                    <img src="../img/poncho3.jpg" alt="Poncho Catamarqueño" class="img-fluid rounded mt-auto shadow-sm imagen-contacto">
+
+                </div>
+            </section>
+
+            
+            <section class="col-md-7">
+                <div class="card p-4">
+
+                    
+                    <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
+                        <img src="../img/contacto.png" alt="Contacto" class="icono-titulo">
+                        <h2 class="m-0">Enviar una consulta</h2>
+                    </div>
+
+                    <form>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="asunto" class="form-label">Asunto:</label>
+                            <input type="text" class="form-control" id="asunto" name="asunto" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje:</label>
+                            <textarea class="form-control" id="mensaje" name="mensaje" rows="6" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Enviar consulta</button>
+                        <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+                    </form>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="container-fluid text-center py-4 mt-5">
+        <p>© 2026 Poncho Digital</p>
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+            <img src="../img/poncho.png" alt="Poncho" class="icono-footer">
+            <p class="m-0">Todos los derechos reservados</p>
+        </div>
+        <p class="p-1">
+            Desarrollado para la cátedra de <strong>Programación III</strong> | 
+            Carrera de <strong>Ingeniería en Informática</strong> | 
+            Facultad de Tecnología y Ciencias Aplicadas - Universidad Nacional de Catamarca (U.N.Ca.)
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous">
+    </script>
+
+</body>
+</html>

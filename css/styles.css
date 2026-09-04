@@ -1,0 +1,207 @@
+
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    background-color: rgb(73, 73, 73);
+    color: white;
+    text-align: center;
+}
+
+nav {
+    background-color: rgb(70, 70, 70);
+    color: white;
+    text-align: center;
+    padding: 3px;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: rgb(134, 62, 62);
+}
+
+nav a:visited {
+    color: rgb(78, 177, 75);
+}
+
+main {
+    background-color: rgb(240, 240, 240);
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.container a {
+    background-color: rgb(68, 68, 68);
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.container a:hover {
+    background-color: rgb(134, 62, 62);
+    color: white;
+}
+
+footer {
+    background-color: rgb(73, 73, 73);
+    color: white;
+}
+
+
+
+.formulario {
+    max-width: 850px;
+    margin: auto;
+    background-color: #f3efe9;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(139, 45, 45, 0.15);
+}
+
+.campo {
+    margin-bottom: 20px;
+}
+
+.campo label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.campo input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox input {
+    width: auto;
+}
+
+.checkbox label {
+    margin: 0;
+}
+
+section img {
+    display: block;
+    max-width: 100%;
+    width: 600px;
+    margin: 20px auto;
+    border-radius: 10px;
+}
+.titulo-artesano {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+}
+
+
+section .titulo-artesano img {
+    display: inline-block;
+    width: 40px;
+    height: auto;
+    margin: 0; /
+    
+}
+
+.titulo-artesano h2 {
+    margin: 0;
+    padding: 0;
+}
+
+
+.icono-footer {
+    width: 24px;        
+    height: 24px;       
+    object-fit: contain;
+    display: inline-block !important;
+    margin: 0 !important; 
+}
+
+.imagen-productos {
+    width: 300px;
+    display:flex;
+    justify-content: center;
+    margin: 0 auto 10px;
+}
+
+.imagen-agregados {
+    width: 28px;          
+    height: 28px;         
+    object-fit: contain;  
+    display: inline-block !important;
+    margin: 0 !important; 
+    border-radius: 0;
+}
+.icono-titulo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: inline-block !important;
+    margin: 0 !important;
+    border-radius: 0;
+}
+.imagen-contacto {
+    max-width: 80%;          /* Controla el ancho horizontal para que no quede gigante */
+    height: auto;            /* La altura escala sola automáticamente */
+    display: block !important;
+    margin: 20px auto 0 auto !important; /* Centra la imagen */
+    border-radius: 8px;
+}
+@media (max-width: 600px) {
+
+    nav ul li {
+        display: block;
+        margin: 8px 0;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    .formulario {
+        padding: 20px;
+        width: auto;
+    }
+
+    .container a {
+        font-size: 1em;
+    }
+}
+
