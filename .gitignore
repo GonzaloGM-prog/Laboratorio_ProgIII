@@ -1,0 +1,7 @@
+poncho_digital/Scripts/
+poncho_digital/Lib/
+poncho_digital/Include/
+poncho_digital/pyvenv.cfg
+__pycache__/
+*.pyc
+db.sqlite3
