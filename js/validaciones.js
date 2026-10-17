@@ -1,34 +1,83 @@
-const formularioSolicitud = document.querySelector("#formSolicitud"); 
+/* ============================
+   SISTEMA DE NOTIFICACIONES TOAST
+   Reemplaza los alert() del navegador por
+   notificaciones visuales más prolijas
+   ============================ */
+function mostrarToast(mensaje, tipo = 'exito') {
+    let contenedor = document.querySelector('.toast-container');
+    if (!contenedor) {
+        contenedor = document.createElement('div');
+        contenedor.className = 'toast-container';
+        document.body.appendChild(contenedor);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${tipo}`;
+    toast.textContent = mensaje;
+    contenedor.appendChild(toast);
+
+    // Animar entrada
+    requestAnimationFrame(() => toast.classList.add('toast-show'));
+
+    // Remover después de 4 segundos
+    setTimeout(() => {
+        toast.classList.remove('toast-show');
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+/* ============================
+   FORMULARIO DE SOLICITUD (solicitud.html)
+   ============================ */
+const formularioSolicitud = document.querySelector("#formSolicitud");
 if (formularioSolicitud) {
-    formularioSolicitud.addEventListener("submit", function (evento) { 
-        evento.preventDefault(); 
-        const nombre = document.querySelector("#nombre").value.trim(); 
-        const apellido = document.querySelector("#apellido").value.trim(); 
-        const dni = document.querySelector("#dni").value.trim(); 
-        const email = document.querySelector("#email").value.trim(); 
-        const telefono = document.querySelector("#telefono").value.trim(); 
-        const descripcion = document.querySelector("#descripcion").value.trim(); 
-        const aceptar = document.querySelector("#aceptar").checked; 
-        // Validar nombre 
-        if (nombre.length < 2) { alert("El nombre debe tener al menos 2 caracteres."); return; } 
-        // Validar apellido 
-        if (apellido.length < 2) { alert("El apellido debe tener al menos 2 caracteres."); return; }
-        //Validar DNI 
-        if (!/^[0-9]{7,8}$/.test(dni)) { alert("El DNI debe tener entre 7 y 8 números."); return; }
-         // Validar email 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert("Ingresá un email válido."); return; }
-         // Validar teléfono 
-        if (!/^[0-9]{8,15}$/.test(telefono)) { alert("El teléfono debe contener entre 8 y 15 números."); return; } 
-        // Validar descripción 
-        if (descripcion.length < 10) { alert("La descripción debe tener al menos 10 caracteres."); return; } 
-        // Validar checkbox 
-        if (!aceptar) { 
-            alert("Debés aceptar la declaración de datos."); return; 
-        } 
-            alert("Solicitud enviada correctamente."); formularioSolicitud.reset(); 
-        }); }
+    formularioSolicitud.addEventListener("submit", function (evento) {
+        evento.preventDefault();
+        const nombre = document.querySelector("#nombre").value.trim();
+        const apellido = document.querySelector("#apellido").value.trim();
+        const dni = document.querySelector("#dni").value.trim();
+        const email = document.querySelector("#email").value.trim();
+        const telefono = document.querySelector("#telefono").value.trim();
+        const descripcion = document.querySelector("#descripcion").value.trim();
+        const aceptar = document.querySelector("#aceptar").checked;
 
+        if (nombre.length < 2) {
+            mostrarToast("El nombre debe tener al menos 2 caracteres.", "error");
+            return;
+        }
+        if (apellido.length < 2) {
+            mostrarToast("El apellido debe tener al menos 2 caracteres.", "error");
+            return;
+        }
+        if (!/^[0-9]{7,8}$/.test(dni)) {
+            mostrarToast("El DNI debe tener entre 7 y 8 números.", "error");
+            return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            mostrarToast("Ingresá un email válido.", "error");
+            return;
+        }
+        if (!/^[0-9]{8,15}$/.test(telefono)) {
+            mostrarToast("El teléfono debe contener entre 8 y 15 números.", "error");
+            return;
+        }
+        if (descripcion.length < 10) {
+            mostrarToast("La descripción debe tener al menos 10 caracteres.", "error");
+            return;
+        }
+        if (!aceptar) {
+            mostrarToast("Debés aceptar la declaración de datos.", "error");
+            return;
+        }
 
+        mostrarToast("Solicitud enviada correctamente.", "exito");
+        formularioSolicitud.reset();
+    });
+}
+
+/* ============================
+   FORMULARIO DE CONTACTO (contactos.html)
+   ============================ */
 const formularioContacto = document.querySelector("#formContacto");
 if (formularioContacto) {
     formularioContacto.addEventListener("submit", function (evento) {
@@ -38,37 +87,32 @@ if (formularioContacto) {
         const mensaje = document.querySelector("#mensaje").value.trim();
         const email = document.querySelector("#email").value.trim();
 
-        // Validar nombre
         if (nombre.length < 2) {
-            alert("El nombre debe tener al menos 2 caracteres.");
+            mostrarToast("El nombre debe tener al menos 2 caracteres.", "error");
             return;
         }
-
-        // Validar asunto
         if (asunto.length < 2) {
-            alert("El asunto debe tener al menos 2 caracteres.");
+            mostrarToast("El asunto debe tener al menos 2 caracteres.", "error");
             return;
         }
-
-        // Validar mensaje
         if (mensaje.length < 10) {
-            alert("El mensaje debe tener al menos 10 caracteres.");
+            mostrarToast("El mensaje debe tener al menos 10 caracteres.", "error");
             return;
         }
-
-        // Validar email
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            alert("Ingresá un email válido.");
+            mostrarToast("Ingresá un email válido.", "error");
             return;
         }
 
-        alert("Mensaje enviado correctamente.");
+        mostrarToast("Mensaje enviado correctamente.", "exito");
         formularioContacto.reset();
     });
 }
-        
 
-const formularioProductos = document.querySelector("#formProductos");
+/* ============================
+   FORMULARIO DE PRODUCTOS (productos.html)
+   ============================ */
+const formularioProductos = document.querySelector("#formProducto");
 if (formularioProductos) {
     formularioProductos.addEventListener("submit", function (evento) {
         evento.preventDefault();
@@ -77,31 +121,24 @@ if (formularioProductos) {
         const precio = document.querySelector("#precio").value.trim();
         const descripcion = document.querySelector("#descripcion").value.trim();
 
-        // Validar nombre
         if (nombre.length < 2) {
-            alert("El nombre debe tener al menos 2 caracteres.");
+            mostrarToast("El nombre debe tener al menos 2 caracteres.", "error");
+            return;
+        }
+        if (rubro === "") {
+            mostrarToast("El rubro no puede estar vacío.", "error");
+            return;
+        }
+        if (precio <= 0 || precio === "") {
+            mostrarToast("El precio no puede estar vacío y debe ser mayor que 0.", "error");
+            return;
+        }
+        if (descripcion.length < 10) {
+            mostrarToast("La descripción debe tener al menos 10 caracteres.", "error");
             return;
         }
 
-        // Validar rubro
-        if (rubro === "") {
-            alert("El rubro no puede estar vacío.");
-            return;
-        }
-        
-        // Validar precio
-        if (precio <=0 || precio === "") {
-            alert("El precio no puede estar vacío y debe ser mayor que 0.");
-            return;
-        }
-        
-        // Validar descripción
-        if (descripcion.length < 10) {
-            alert("La descripción debe tener al menos 10 caracteres.");
-            return;
-        }
-        
-        alert("Producto añadido correctamente.");
+        mostrarToast("Producto añadido correctamente.", "exito");
         formularioProductos.reset();
     });
 }
