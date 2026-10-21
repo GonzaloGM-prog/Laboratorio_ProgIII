@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}PONCHO DIGITAL{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+          crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <h1 class="p-2">PONCHO DIGITAL</h1>
+        {% block encabezado %}{% endblock %}
+    </header>
+
+    <nav class="container">
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                   href="{% url 'home' %}">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'solicitud' %}active{% endif %}"
+                   href="{% url 'artesanos:solicitud' %}">Postularme</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'lista' %}active{% endif %}"
+                   href="{% url 'productos:lista' %}">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'contacto' %}active{% endif %}"
+                   href="{% url 'contacto' %}">Contacto</a>
+            </li>
+        </ul>
+    </nav>
+
+    {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block contenido_principal %}{% endblock %}
+
+    <footer class="container-fluid text-center py-4 mt-5">
+        <p>© 2026 Poncho Digital</p>
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+            <img src="{% static 'img/poncho.png' %}" alt="Poncho" class="icono-footer">
+            <p class="m-0">Todos los derechos reservados</p>
+        </div>
+        <p class="p-1">
+            Desarrollado para la cátedra de <strong>Programación III</strong> |
+            Carrera de <strong>Ingeniería en Informática</strong> |
+            Facultad de Tecnología y Ciencias Aplicadas - Universidad Nacional de Catamarca (U.N.Ca.)
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,108 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block titulo %}Solicitud de Artesano{% endblock %}
+
+{% block encabezado %}
+    <h2 class="p-2">Solicitud de participación</h2>
+    <p class="p-2">Formulario para solicitar la participación como artesano en la Fiesta del Poncho.</p>
+{% endblock %}
+
+{% block contenido_principal %}
+    <main>
+
+        <section class="formulario">
+
+            <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+                <img src="{% static 'img/formularios-de-google.png' %}" alt="Formulario" class="icono-titulo">
+                <h2 class="m-0">Datos personales</h2>
+            </div>
+
+            <form id="formSolicitud" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="text-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="campo">
+                    <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+                    {{ form.nombre }}
+                    <div class="text-danger small">{{ form.nombre.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.apellido.id_for_label }}">Apellido:</label>
+                    {{ form.apellido }}
+                    <div class="text-danger small">{{ form.apellido.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.dni.id_for_label }}">DNI:</label>
+                    {{ form.dni }}
+                    <div class="text-danger small">{{ form.dni.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.email.id_for_label }}">Email:</label>
+                    {{ form.email }}
+                    <div class="text-danger small">{{ form.email.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.telefono.id_for_label }}">Teléfono:</label>
+                    {{ form.telefono }}
+                    <div class="text-danger small">{{ form.telefono.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.localidad.id_for_label }}">Localidad:</label>
+                    {{ form.localidad }}
+                    <div class="text-danger small">{{ form.localidad.errors }}</div>
+                </div>
+
+                <br><br>
+
+                <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+                    <img src="{% static 'img/artesano.png' %}" alt="Emprendimiento" class="icono-titulo">
+                    <h2 class="m-0">Datos del emprendimiento</h2>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.rubros.id_for_label }}">Rubros (podés elegir más de uno con Ctrl + clic):</label>
+                    {{ form.rubros }}
+                    <div class="text-danger small">{{ form.rubros.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.descripcion.id_for_label }}">Descripción del emprendimiento:</label>
+                    {{ form.descripcion }}
+                    <div class="text-danger small">{{ form.descripcion.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.foto.id_for_label }}">Foto (opcional):</label>
+                    {{ form.foto }}
+                    <div class="text-danger small">{{ form.foto.errors }}</div>
+                </div>
+
+                <div class="campo checkbox">
+                    {{ form.aceptar }}
+                    <label for="{{ form.aceptar.id_for_label }}"> {{ form.aceptar.label }}</label>
+                    <div class="text-danger small">{{ form.aceptar.errors }}</div>
+                </div>
+
+                <div class="botones">
+                    <button type="submit">Enviar solicitud</button>
+                    <button type="reset">Limpiar formulario</button>
+                </div>
+
+            </form>
+        </section>
+
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/validaciones.js' %}"></script>
+{% endblock %}

@@ -475,7 +475,7 @@ section .titulo-artesano img {
 /* ============================
    TOAST — notificaciones visuales
    ============================ */
-.toast-container {
+.notificaciones {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -486,7 +486,7 @@ section .titulo-artesano img {
     max-width: 350px;
 }
 
-.toast {
+.notificacion {
     padding: 14px 20px;
     border-radius: 8px;
     color: white;
@@ -499,16 +499,16 @@ section .titulo-artesano img {
     transition: all 0.3s ease;
 }
 
-.toast-show {
+.notificacion-show {
     opacity: 1;
     transform: translateX(0);
 }
 
-.toast-exito {
+.notificacion-exito {
     background: linear-gradient(135deg, #2d7a32, #3d9b42);
 }
 
-.toast-error {
+.notificacion-error {
     background: linear-gradient(135deg, var(--punzo), #a52525);
 }
 
@@ -570,7 +570,7 @@ section .titulo-artesano img {
         width: 100%;
     }
 
-    .toast-container {
+    .notificaciones {
         left: 10px;
         right: 10px;
         max-width: none;

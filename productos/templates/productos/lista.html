@@ -1,0 +1,121 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block titulo %}Productos{% endblock %}
+
+{% block encabezado %}
+    <h2 class="p-2">Gestión de productos</h2>
+    <p class="p-2">Administrá los productos de tu emprendimiento.</p>
+{% endblock %}
+
+{% block contenido_principal %}
+    <main class="container my-5">
+
+        <section class="card p-4 mb-5">
+
+            <h2 class="text-center mb-4">Mis productos publicados</h2>
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped table-hover align-middle text-center">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Rubro</th>
+                            <th>Artesano</th>
+                            <th>Precio</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.rubro.nombre }}</td>
+                            <td>{{ producto.artesano }}</td>
+                            <td>${{ producto.precio|floatformat:0 }}</td>
+                            <td>
+                                                                <a href="{% url 'productos:editar' producto.pk %}" class="btn btn-primary btn-sm">Modificar</a>
+                                <form method="post" action="{% url 'productos:eliminar' producto.pk %}" class="d-inline"
+                                      onsubmit="return confirm('¿Eliminar este producto?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">Todavía no hay productos cargados.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <img src="{% static 'img/h.jpg' %}" alt="Artesanía del Poncho" class="imagen-productos">
+            </div>
+
+        </section>
+
+        <section class="card p-4">
+            <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
+                <img src="{% static 'img/poncho2.png' %}" alt="Poncho" class="imagen-agregados">
+                <h2 class="m-0">Agregar nuevo producto</h2>
+            </div>
+
+                        <form id="formProducto" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="text-danger">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="row">
+
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="{{ form.artesano.id_for_label }}" class="form-label">Artesano:</label>
+                        {{ form.artesano }}
+                        <div class="text-danger small">{{ form.artesano.errors }}</div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre del producto:</label>
+                        {{ form.nombre }}
+                        <div class="text-danger small">{{ form.nombre.errors }}</div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="{{ form.precio.id_for_label }}" class="form-label">Precio:</label>
+                        {{ form.precio }}
+                        <div class="text-danger small">{{ form.precio.errors }}</div>
+                    </div>
+
+                    <div class="col-12 col-md-6 mb-3">
+                        <label for="{{ form.imagen.id_for_label }}" class="form-label">Imagen del producto:</label>
+                        {{ form.imagen }}
+                        <div class="text-danger small">{{ form.imagen.errors }}</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción:</label>
+                        {{ form.descripcion }}
+                        <div class="text-danger small">{{ form.descripcion.errors }}</div>
+                    </div>
+
+                    <div class="col-12 text-center mt-3">
+                        <button type="submit" class="btn btn-success px-4 me-2">Agregar producto</button>
+                        <button type="reset" class="btn btn-outline-secondary px-4">Limpiar</button>
+                    </div>
+
+                </div>
+            </form>
+        </section>
+
+    </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/validaciones.js' %}"></script>
+{% endblock %}

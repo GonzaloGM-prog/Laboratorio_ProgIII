@@ -1,33 +1,36 @@
 /* ============================
-   SISTEMA DE NOTIFICACIONES TOAST
+   SISTEMA DE NOTIFICACIONES
    Reemplaza los alert() del navegador por
-   notificaciones visuales más prolijas
+   notificaciones visuales más prolijas.
+   (Las clases se llaman "notificacion" y no "toast"
+   para no chocar con las de Bootstrap.)
    ============================ */
 function mostrarToast(mensaje, tipo = 'exito') {
-    let contenedor = document.querySelector('.toast-container');
+    let contenedor = document.querySelector('.notificaciones');
     if (!contenedor) {
         contenedor = document.createElement('div');
-        contenedor.className = 'toast-container';
+        contenedor.className = 'notificaciones';
         document.body.appendChild(contenedor);
     }
 
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${tipo}`;
-    toast.textContent = mensaje;
-    contenedor.appendChild(toast);
+    const aviso = document.createElement('div');
+    aviso.className = `notificacion notificacion-${tipo}`;
+    aviso.textContent = mensaje;
+    contenedor.appendChild(aviso);
 
     // Animar entrada
-    requestAnimationFrame(() => toast.classList.add('toast-show'));
+    requestAnimationFrame(() => aviso.classList.add('notificacion-show'));
 
     // Remover después de 4 segundos
     setTimeout(() => {
-        toast.classList.remove('toast-show');
-        setTimeout(() => toast.remove(), 300);
+        aviso.classList.remove('notificacion-show');
+        setTimeout(() => aviso.remove(), 300);
     }, 4000);
 }
 
 /* ============================
-   FORMULARIO DE SOLICITUD (solicitud.html)
+   FORMULARIO DE SOLICITUD (solicitud_form.html)
+   Si la validación pasa, se envía a Django.
    ============================ */
 const formularioSolicitud = document.querySelector("#formSolicitud");
 if (formularioSolicitud) {
@@ -70,13 +73,13 @@ if (formularioSolicitud) {
             return;
         }
 
-        mostrarToast("Solicitud enviada correctamente.", "exito");
-        formularioSolicitud.reset();
+        formularioSolicitud.submit();
     });
 }
 
 /* ============================
-   FORMULARIO DE CONTACTO (contactos.html)
+   FORMULARIO DE CONTACTO (contacto.html)
+   No tiene modelo detrás: solo valida y avisa.
    ============================ */
 const formularioContacto = document.querySelector("#formContacto");
 if (formularioContacto) {
@@ -110,14 +113,14 @@ if (formularioContacto) {
 }
 
 /* ============================
-   FORMULARIO DE PRODUCTOS (productos.html)
+   FORMULARIO DE PRODUCTOS (lista.html)
+   Si la validación pasa, se envía a Django.
    ============================ */
 const formularioProductos = document.querySelector("#formProducto");
 if (formularioProductos) {
     formularioProductos.addEventListener("submit", function (evento) {
         evento.preventDefault();
         const nombre = document.querySelector("#nombre").value.trim();
-        const rubro = document.querySelector("#rubro").value.trim();
         const precio = document.querySelector("#precio").value.trim();
         const descripcion = document.querySelector("#descripcion").value.trim();
 
@@ -125,11 +128,7 @@ if (formularioProductos) {
             mostrarToast("El nombre debe tener al menos 2 caracteres.", "error");
             return;
         }
-        if (rubro === "") {
-            mostrarToast("El rubro no puede estar vacío.", "error");
-            return;
-        }
-        if (precio <= 0 || precio === "") {
+        if (precio === "" || Number(precio) <= 0) {
             mostrarToast("El precio no puede estar vacío y debe ser mayor que 0.", "error");
             return;
         }
@@ -138,7 +137,6 @@ if (formularioProductos) {
             return;
         }
 
-        mostrarToast("Producto añadido correctamente.", "exito");
-        formularioProductos.reset();
+        formularioProductos.submit();
     });
 }

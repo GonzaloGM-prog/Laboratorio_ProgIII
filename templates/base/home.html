@@ -1,0 +1,52 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block titulo %}PONCHO DIGITAL{% endblock %}
+
+{% block encabezado %}
+    <h2 class="p-2">Bienvenido al Poncho Digital</h2>
+    <p class="p-2">Plataforma digital de artesanos de la Fiesta del Poncho</p>
+{% endblock %}
+
+{% block contenido_principal %}
+<main>
+    <section>
+        <h2>¿Qué es Poncho Digital?</h2>
+        <p>Poncho Digital es una plataforma digital de artesanos de la Fiesta del Poncho, donde los artesanos pueden encontrar productos de alta calidad y disfrutar de la fiesta.</p>
+        <img src="{% static 'img/ft1.jpg' %}" alt="Fiesta del Poncho" class="img-fluid">
+    </section>
+
+    <section>
+        <h2>Sobre la Feria y la Plataforma</h2>
+        <p>
+            La Fiesta Nacional e Internacional del Poncho es el evento cultural más importante de nuestra provincia,
+            atrayendo a miles de visitantes de todo el mundo para recorrer pabellones colmados de historia, tradición,
+            textiles de primer nivel, artesanías y delicias regionales.
+        </p>
+        <p>
+            <strong>Poncho Digital</strong> surge como una herramienta moderna para resolver las necesidades informáticas de la feria.
+            A través de esta aplicación, los visitantes podrán:
+        </p>
+        <ul>
+            <li>Localizar con precisión los stands y pabellones dentro del predio.</li>
+            <li>Conocer la trayectoria, localidad de origen y los productos de cada artesano participante.</li>
+            <li>Facilitar a los artesanos la publicación de sus catálogos de productos artesanales en tiempo real.</li>
+            <li>Permitir a los organizadores gestionar eficientemente las solicitudes y la asignación de stands.</li>
+        </ul>
+    </section>
+
+    <section>
+        <div class="titulo-artesano">
+            <img src="{% static 'img/artesano.png' %}" alt="Artesano" class="img-fluid">
+            <h2>¿Sos artesano?</h2>
+        </div>
+        <p>
+            Si querés participar de la Fiesta del Poncho, podés completar
+            una solicitud de participación desde nuestra plataforma.
+        </p>
+        <div class="container">
+            <a href="{% url 'artesanos:solicitud' %}">Postularme como artesano</a>
+        </div>
+    </section>
+</main>
+{% endblock %}

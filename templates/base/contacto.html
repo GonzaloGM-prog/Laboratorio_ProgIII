@@ -1,55 +1,22 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base/base.html" %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poncho Digital - Contacto</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
-    rel="stylesheet" 
-    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
-    crossorigin="anonymous">
-</head>
+{% block titulo %}Contacto{% endblock %}
 
-<body>
+{% block encabezado %}
+    <h2 class="p-2">Contacto</h2>
+    <p class="p-2">Estamos para ayudarte.</p>
+{% endblock %}
 
-    <header>
-        <h1 class="p-2">PONCHO DIGITAL</h1>
-        <h2 class="p-2">Contacto</h2>
-        <p class="p-2">Estamos para ayudarte.</p>
-    </header>
-
-    <nav class="container">
-        <ul class="nav nav-pills justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="solicitud.html">Postularme</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="productos.html">Productos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="contactos.html">Contacto</a>
-            </li>
-        </ul>
-    </nav>
-
+{% block contenido_principal %}
     <main class="container my-5">
         <div class="row g-4">
 
-            
             <section class="col-md-5">
                 <div class="card p-4 h-100">
 
-                
                     <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-                        <img src="../img/atencion-al-cliente.png" alt="Atención" class="icono-titulo">
+                        <img src="{% static 'img/atencion-al-cliente.png' %}" alt="Atención" class="icono-titulo">
                         <h2 class="m-0">Información de contacto</h2>
                     </div>
 
@@ -74,19 +41,16 @@
                         </li>
                     </ul>
 
-                    
-                    <img src="../img/poncho3.jpg" alt="Poncho Catamarqueño" class="img-fluid rounded mt-auto shadow-sm imagen-contacto">
+                    <img src="{% static 'img/poncho3.jpg' %}" alt="Poncho Catamarqueño" class="img-fluid rounded mt-auto shadow-sm imagen-contacto">
 
                 </div>
             </section>
 
-            
             <section class="col-md-7">
                 <div class="card p-4">
 
-                    
                     <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
-                        <img src="../img/contacto.png" alt="Contacto" class="icono-titulo">
+                        <img src="{% static 'img/contacto.png' %}" alt="Contacto" class="icono-titulo">
                         <h2 class="m-0">Enviar una consulta</h2>
                     </div>
 
@@ -120,24 +84,8 @@
 
         </div>
     </main>
+{% endblock %}
 
-    <footer class="container-fluid text-center py-4 mt-5">
-        <p>© 2026 Poncho Digital</p>
-        <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
-            <img src="../img/poncho.png" alt="Poncho" class="icono-footer">
-            <p class="m-0">Todos los derechos reservados</p>
-        </div>
-        <p class="p-1">
-            Desarrollado para la cátedra de <strong>Programación III</strong> | 
-            Carrera de <strong>Ingeniería en Informática</strong> | 
-            Facultad de Tecnología y Ciencias Aplicadas - Universidad Nacional de Catamarca (U.N.Ca.)
-        </p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous">
-    </script>
-    <script src="../js/validaciones.js"></script>
-</body>
-</html>
+{% block scripts %}
+    <script src="{% static 'js/validaciones.js' %}"></script>
+{% endblock %}
