@@ -10,3 +10,6 @@ db.sqlite3
 
 *~
 media/
+
+# Entorno virtual (no se sube a Git)
+env_poncho/

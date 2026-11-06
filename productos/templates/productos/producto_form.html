@@ -1,61 +1,89 @@
 {% extends "base/base.html" %}
 {% load static %}
 
-{% block titulo %}Modificar producto{% endblock %}
+{% block titulo %}{% if modo == 'agregar' %}Agregar producto{% else %}Modificar producto{% endif %}{% endblock %}
 
 {% block encabezado %}
-    <h2 class="p-2">Modificar producto</h2>
-    <p class="p-2">Editá los datos de «{{ producto.nombre }}».</p>
+    {% if modo == 'agregar' %}
+        <span class="etiqueta-superior">Nuevo producto</span>
+        <h1>Agregar producto</h1>
+        <p>Publicá una pieza en el catálogo de la Fiesta del Poncho.</p>
+    {% else %}
+        <span class="etiqueta-superior">Edición</span>
+        <h1>Modificar producto</h1>
+        <p>Editá los datos de «{{ producto.nombre }}».</p>
+    {% endif %}
 {% endblock %}
 
 {% block contenido_principal %}
-    <main class="container my-5">
-        <section class="card p-4">
+    <main class="contenedor">
+        <section class="formulario tarjeta" data-revelar>
+
+            <a href="{% url 'productos:lista' %}" class="d-inline-flex align-items-center gap-1 mb-4 fw-semibold">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+                Volver a productos
+            </a>
+
+            {% if not form.artesano and artesano %}
+                {% include "productos/_ficha_artesano.html" %}
+            {% endif %}
 
             <form id="formProducto" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 {% if form.non_field_errors %}
-                    <div class="text-danger">{{ form.non_field_errors }}</div>
+                    <div class="error-general" role="alert">{{ form.non_field_errors }}</div>
                 {% endif %}
 
-                <div class="row">
+                <div class="grilla-campos">
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <label for="{{ form.artesano.id_for_label }}" class="form-label">Artesano:</label>
-                        {{ form.artesano }}
-                        <div class="text-danger small">{{ form.artesano.errors }}</div>
+                    {% if form.artesano %}
+                        {# Solo el administrador elige el artesano #}
+                        <div class="campo campo-ancho">
+                            <label for="{{ form.artesano.id_for_label }}" class="form-label">Artesano</label>
+                            <span class="ayuda">Como administrador elegís a qué artesano aprobado pertenece.</span>
+                            {{ form.artesano }}
+                            <div class="error-campo">{{ form.artesano.errors }}</div>
+                        </div>
+                    {% endif %}
+
+                    <div class="campo">
+                        <label for="{{ form.rubro.id_for_label }}" class="form-label">Rubro</label>
+                        {{ form.rubro }}
+                        <div class="error-campo">{{ form.rubro.errors }}</div>
                     </div>
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre del producto:</label>
+                    <div class="campo">
+                        <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre del producto</label>
                         {{ form.nombre }}
-                        <div class="text-danger small">{{ form.nombre.errors }}</div>
+                        <div class="error-campo">{{ form.nombre.errors }}</div>
                     </div>
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <label for="{{ form.precio.id_for_label }}" class="form-label">Precio:</label>
+                    <div class="campo">
+                        <label for="{{ form.precio.id_for_label }}" class="form-label">Precio (ARS)</label>
                         {{ form.precio }}
-                        <div class="text-danger small">{{ form.precio.errors }}</div>
+                        <div class="error-campo">{{ form.precio.errors }}</div>
                     </div>
 
-                    <div class="col-12 col-md-6 mb-3">
-                        <label for="{{ form.imagen.id_for_label }}" class="form-label">Imagen del producto:</label>
+                    <div class="campo campo-archivo">
+                        <label for="{{ form.imagen.id_for_label }}" class="form-label">Imagen del producto</label>
                         {{ form.imagen }}
-                        <div class="text-danger small">{{ form.imagen.errors }}</div>
+                        <div class="error-campo">{{ form.imagen.errors }}</div>
                     </div>
 
-                    <div class="col-12 mb-3">
-                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción:</label>
+                    <div class="campo campo-ancho">
+                        <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción</label>
                         {{ form.descripcion }}
-                        <div class="text-danger small">{{ form.descripcion.errors }}</div>
+                        <div class="error-campo">{{ form.descripcion.errors }}</div>
                     </div>
 
-                    <div class="col-12 text-center mt-3">
-                        <button type="submit" class="btn btn-success px-4 me-2">Guardar cambios</button>
-                        <a href="{% url 'productos:lista' %}" class="btn btn-outline-secondary px-4">Cancelar</a>
-                    </div>
+                </div>
 
+                <div class="grupo-botones">
+                    <a href="{% url 'productos:lista' %}" class="btn-poncho-borde">Cancelar</a>
+                    <button type="submit" class="btn-poncho">
+                        {% if modo == 'agregar' %}Agregar producto{% else %}Guardar cambios{% endif %}
+                    </button>
                 </div>
             </form>
 

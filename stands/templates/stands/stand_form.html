@@ -1,0 +1,61 @@
+{% extends "base/base.html" %}
+
+{% block titulo %}Asignar stand{% endblock %}
+
+{% block encabezado %}
+    <span class="etiqueta-superior">Administración</span>
+    <h1>Asignar stand</h1>
+    <p>Asigná un lugar del predio a un artesano aprobado.</p>
+{% endblock %}
+
+{% block contenido_principal %}
+    <main class="contenedor">
+        <section class="formulario tarjeta" data-revelar>
+
+            <a href="{% url 'stands:lista' %}" class="d-inline-flex align-items-center gap-1 mb-4 fw-semibold">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+                Volver a stands
+            </a>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="error-general" role="alert">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="grilla-campos">
+                    <div class="campo">
+                        <label for="{{ form.numero.id_for_label }}" class="form-label">{{ form.numero.label }}</label>
+                        {{ form.numero }}
+                        <div class="error-campo">{{ form.numero.errors }}</div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="{{ form.ubicacion.id_for_label }}" class="form-label">{{ form.ubicacion.label }}</label>
+                        {{ form.ubicacion }}
+                        <div class="error-campo">{{ form.ubicacion.errors }}</div>
+                    </div>
+
+                    <div class="campo campo-ancho">
+                        <label for="{{ form.artesano.id_for_label }}" class="form-label">Artesano</label>
+                        <span class="ayuda">Solo aparecen artesanos con la solicitud aprobada.</span>
+                        {{ form.artesano }}
+                        <div class="error-campo">{{ form.artesano.errors }}</div>
+                    </div>
+
+                    <div class="campo campo-ancho campo-check">
+                        {{ form.activo }}
+                        <div><label for="{{ form.activo.id_for_label }}">{{ form.activo.label }}</label></div>
+                        <div class="error-campo">{{ form.activo.errors }}</div>
+                    </div>
+                </div>
+
+                <div class="grupo-botones">
+                    <a href="{% url 'stands:lista' %}" class="btn-poncho-borde">Cancelar</a>
+                    <button type="submit" class="btn-poncho">Guardar stand</button>
+                </div>
+            </form>
+        </section>
+    </main>
+{% endblock %}

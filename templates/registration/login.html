@@ -1,0 +1,65 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block titulo %}Ingresar{% endblock %}
+
+{% block encabezado %}
+    <span class="etiqueta-superior">Acceso a Poncho Digital</span>
+    <h1>Ingresar</h1>
+    <p>Entrá con tu usuario (o DNI si sos artesano) y tu contraseña.</p>
+{% endblock %}
+
+{% block contenido_principal %}
+    <main class="contenedor">
+        <section class="formulario formulario-angosto tarjeta" data-revelar>
+
+            <h2 class="titulo-seccion">
+                <img src="{% static 'img/artesano.png' %}" alt="" class="icono-titulo">
+                Mi cuenta
+            </h2>
+
+            {% if next and not user.is_authenticated %}
+                <div class="aviso-info" role="note">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <p>Para continuar tenés que ingresar con tu cuenta.</p>
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="error-general" role="alert">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <div class="campo">
+                    <label for="{{ form.username.id_for_label }}">Usuario o DNI</label>
+                    <span class="ayuda">Artesanos: el mismo DNI con el que se postularon.</span>
+                    {{ form.username }}
+                    <div class="error-campo">{{ form.username.errors }}</div>
+                </div>
+
+                <div class="campo">
+                    <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                    {{ form.password }}
+                    <div class="error-campo">{{ form.password.errors }}</div>
+                </div>
+
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <div class="grupo-botones">
+                    <button type="submit" class="btn-poncho w-100">
+                        Ingresar
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                    </button>
+                </div>
+            </form>
+
+            <p class="texto-suave text-center mt-4 mb-0">
+                ¿Todavía no tenés cuenta?
+                <a href="{% url 'artesanos:solicitud' %}" class="fw-bold">Postulate como artesano</a>
+            </p>
+
+        </section>
+    </main>
+{% endblock %}

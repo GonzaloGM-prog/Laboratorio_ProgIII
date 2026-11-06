@@ -1,0 +1,93 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block titulo %}Solicitudes{% endblock %}
+
+{% block encabezado %}
+    <span class="etiqueta-superior">Administración</span>
+    <h1>Solicitudes de artesanos</h1>
+    <p>Revisá las postulaciones y aprobalas o rechazalas.</p>
+{% endblock %}
+
+{% block contenido_principal %}
+    <main class="contenedor pila">
+
+        <section class="tarjeta" data-revelar>
+            <div class="cabecera-tabla">
+                <h2 class="titulo-seccion">Pendientes</h2>
+                <span class="contador-productos">{{ pendientes|length }} pendiente{{ pendientes|length|pluralize }}</span>
+            </div>
+
+            {% for s in pendientes %}
+                <article class="solicitud">
+                    <div class="solicitud-datos">
+                        <h3>{{ s.artesano.nombre }}</h3>
+                        <ul class="solicitud-meta">
+                            <li><strong>DNI</strong> {{ s.artesano.dni }}</li>
+                            <li><strong>Localidad</strong> {{ s.artesano.localidad }}</li>
+                            <li><strong>Teléfono</strong> {{ s.artesano.telefono|default:"—" }}</li>
+                            <li><strong>Enviada</strong> {{ s.fecha|date:"d/m/Y H:i" }}</li>
+                        </ul>
+                        <div class="chips-estaticos">
+                            {% for r in s.artesano.rubros.all %}<span class="chip-estatico">{{ r.nombre }}</span>{% endfor %}
+                        </div>
+                        {% if s.artesano.descripcion %}<p class="texto-suave mb-0">{{ s.artesano.descripcion }}</p>{% endif %}
+                    </div>
+
+                    <div class="solicitud-acciones">
+                        <form method="post" action="{% url 'artesanos:resolver' s.pk 'aprobar' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-poncho w-100">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                                Aprobar
+                            </button>
+                        </form>
+                        <form method="post" action="{% url 'artesanos:resolver' s.pk 'rechazar' %}"
+                              onsubmit="return confirm('¿Rechazar la solicitud de {{ s.artesano.nombre|escapejs }}?');">
+                            {% csrf_token %}
+                            <label for="obs-{{ s.pk }}" class="visually-hidden">Motivo del rechazo</label>
+                            <input type="text" id="obs-{{ s.pk }}" name="observaciones" class="form-control mb-2"
+                                   placeholder="Motivo del rechazo (opcional)">
+                            <button type="submit" class="btn-accion btn-accion-eliminar w-100">Rechazar</button>
+                        </form>
+                    </div>
+                </article>
+            {% empty %}
+                <p class="vacio">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                    No hay solicitudes pendientes.
+                </p>
+            {% endfor %}
+        </section>
+
+        <section class="tarjeta" data-revelar>
+            <h2 class="titulo-seccion">Últimas resueltas</h2>
+            <table class="tabla-productos">
+                <caption class="visually-hidden">Solicitudes ya resueltas</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Artesano</th>
+                        <th scope="col">Localidad</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in resueltas %}
+                        <tr>
+                            <td data-label="Artesano"><span class="nombre-producto">{{ s.artesano.nombre }}</span></td>
+                            <td data-label="Localidad">{{ s.artesano.localidad }}</td>
+                            <td data-label="Fecha">{{ s.fecha|date:"d/m/Y" }}</td>
+                            <td data-label="Estado"><span class="estado estado-{{ s.estado }}">{{ s.get_estado_display }}</span></td>
+                            <td data-label="Observaciones">{{ s.observaciones|default:"—" }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="5" class="vacio">Todavía no se resolvió ninguna solicitud.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+{% endblock %}

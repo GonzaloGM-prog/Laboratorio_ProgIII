@@ -10,6 +10,9 @@ function mostrarToast(mensaje, tipo = 'exito') {
     if (!contenedor) {
         contenedor = document.createElement('div');
         contenedor.className = 'notificaciones';
+        // Anuncia los avisos a lectores de pantalla (solo accesibilidad)
+        contenedor.setAttribute('role', 'status');
+        contenedor.setAttribute('aria-live', 'polite');
         document.body.appendChild(contenedor);
     }
 
@@ -66,6 +69,20 @@ if (formularioSolicitud) {
         }
         if (descripcion.length < 10) {
             mostrarToast("La descripción debe tener al menos 10 caracteres.", "error");
+            return;
+        }
+        const password = document.querySelector("#password").value;
+        const password2 = document.querySelector("#password2").value;
+        if (password.length < 8) {
+            mostrarToast("La contraseña debe tener al menos 8 caracteres.", "error");
+            return;
+        }
+        if (/^[0-9]+$/.test(password)) {
+            mostrarToast("La contraseña no puede ser solo números.", "error");
+            return;
+        }
+        if (password !== password2) {
+            mostrarToast("Las contraseñas no coinciden.", "error");
             return;
         }
         if (!aceptar) {

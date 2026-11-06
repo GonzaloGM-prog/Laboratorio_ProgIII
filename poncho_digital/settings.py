@@ -95,6 +95,11 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'usuarios.Usuario'
 
+# Login de artesanos
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'productos:lista'
+LOGOUT_REDIRECT_URL = 'home'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
@@ -118,9 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ar'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Argentina/Catamarca'
 
 USE_I18N = True
 

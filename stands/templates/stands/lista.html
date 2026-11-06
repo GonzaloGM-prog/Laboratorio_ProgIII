@@ -1,0 +1,59 @@
+{% extends "base/base.html" %}
+
+{% block titulo %}Stands{% endblock %}
+
+{% block encabezado %}
+    <span class="etiqueta-superior">Predio de la feria</span>
+    <h1>Stands</h1>
+    <p>Ubicación de cada artesano dentro de los pabellones.</p>
+    {% if perms.stands.add_stand %}
+        <div class="portada-acciones">
+            <a class="btn-claro" href="{% url 'stands:agregar' %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+                Asignar stand
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block contenido_principal %}
+    <main class="contenedor">
+        <section class="tarjeta" data-revelar>
+            <div class="cabecera-tabla">
+                <h2 class="titulo-seccion">Listado de stands</h2>
+                <span class="contador-productos">{{ stands|length }} stand{{ stands|length|pluralize }}</span>
+            </div>
+
+            <table class="tabla-productos">
+                <caption class="visually-hidden">Stands de la feria</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Stand</th>
+                        <th scope="col">Ubicación</th>
+                        <th scope="col">Artesano</th>
+                        <th scope="col">Rubros</th>
+                        <th scope="col">Localidad</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stand in stands %}
+                        <tr>
+                            <td data-label="Stand"><span class="nombre-producto">{{ stand.numero }}</span></td>
+                            <td data-label="Ubicación">{{ stand.ubicacion }}</td>
+                            <td data-label="Artesano">{{ stand.artesano.nombre }}</td>
+                            <td data-label="Rubros">{{ stand.artesano.rubros.all|join:", "|default:"—" }}</td>
+                            <td data-label="Localidad">{{ stand.artesano.localidad }}</td>
+                            <td data-label="Estado">
+                                {% if stand.activo %}<span class="estado estado-aprobada">Activo</span>
+                                {% else %}<span class="estado estado-rechazada">Inactivo</span>{% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="6" class="vacio">Todavía no hay stands asignados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+{% endblock %}

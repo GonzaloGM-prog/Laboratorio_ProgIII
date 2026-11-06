@@ -4,79 +4,102 @@
 {% block titulo %}Contacto{% endblock %}
 
 {% block encabezado %}
-    <h2 class="p-2">Contacto</h2>
-    <p class="p-2">Estamos para ayudarte.</p>
+    <span class="etiqueta-superior">Atención al visitante</span>
+    <h1>Contacto</h1>
+    <p>Estamos para ayudarte.</p>
 {% endblock %}
 
 {% block contenido_principal %}
-    <main class="container my-5">
+    <main class="contenedor">
         <div class="row g-4">
 
-            <section class="col-md-5">
-                <div class="card p-4 h-100">
+            <section class="col-lg-5" data-revelar>
+                <div class="tarjeta h-100 d-flex flex-column">
 
-                    <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-                        <img src="{% static 'img/atencion-al-cliente.png' %}" alt="Atención" class="icono-titulo">
-                        <h2 class="m-0">Información de contacto</h2>
-                    </div>
+                    <h2 class="titulo-seccion">
+                        <img src="{% static 'img/atencion-al-cliente.png' %}" alt="" class="icono-titulo">
+                        Información de contacto
+                    </h2>
 
-                    <p>
+                    <p class="texto-suave">
                         Si tenés alguna consulta sobre la Fiesta del Poncho,
                         los artesanos, los productos o los stands, podés
                         comunicarte con nosotros.
                     </p>
 
-                    <ul class="list-group my-3">
-                        <li class="list-group-item">
-                            <strong>Email:</strong><br>
-                            contacto@ponchodigital.com
+                    <ul class="lista-contacto">
+                        <li>
+                            <span class="icono-dato" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+                            </span>
+                            <div>
+                                <strong>Email</strong>
+                                <a href="mailto:contacto@ponchodigital.com">contacto@ponchodigital.com</a>
+                            </div>
                         </li>
-                        <li class="list-group-item">
-                            <strong>Teléfono:</strong><br>
-                            3834-123456
+                        <li>
+                            <span class="icono-dato" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+                            </span>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <a href="tel:3834123456">3834-123456</a>
+                            </div>
                         </li>
-                        <li class="list-group-item">
-                            <strong>Ubicación:</strong><br>
-                            Catamarca, Argentina
+                        <li>
+                            <span class="icono-dato" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </span>
+                            <div>
+                                <strong>Ubicación</strong>
+                                <span>Catamarca, Argentina</span>
+                            </div>
                         </li>
                     </ul>
 
-                    <img src="{% static 'img/poncho3.jpg' %}" alt="Poncho Catamarqueño" class="img-fluid rounded mt-auto shadow-sm imagen-contacto">
+                    <img src="{% static 'img/poncho3.jpg' %}" alt="Poncho Catamarqueño" class="imagen-contacto mt-auto" loading="lazy">
 
                 </div>
             </section>
 
-            <section class="col-md-7">
-                <div class="card p-4">
+            <section class="col-lg-7" data-revelar style="--retraso: 100ms">
+                <div class="tarjeta h-100">
 
-                    <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
-                        <img src="{% static 'img/contacto.png' %}" alt="Contacto" class="icono-titulo">
-                        <h2 class="m-0">Enviar una consulta</h2>
-                    </div>
+                    <h2 class="titulo-seccion">
+                        <img src="{% static 'img/contacto.png' %}" alt="" class="icono-titulo">
+                        Enviar una consulta
+                    </h2>
 
                     <form id="formContacto">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        <div class="grilla-campos">
+                            <div class="campo">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" autocomplete="name" required>
+                            </div>
+
+                            <div class="campo">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" autocomplete="email" required>
+                            </div>
+
+                            <div class="campo campo-ancho">
+                                <label for="asunto" class="form-label">Asunto</label>
+                                <input type="text" class="form-control" id="asunto" name="asunto" required>
+                            </div>
+
+                            <div class="campo campo-ancho">
+                                <label for="mensaje" class="form-label">Mensaje</label>
+                                <textarea class="form-control" id="mensaje" name="mensaje" rows="6" required></textarea>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                        <div class="grupo-botones">
+                            <button type="reset" class="btn-poncho-borde">Limpiar</button>
+                            <button type="submit" class="btn-poncho">
+                                Enviar consulta
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                            </button>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="asunto" class="form-label">Asunto:</label>
-                            <input type="text" class="form-control" id="asunto" name="asunto" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="mensaje" class="form-label">Mensaje:</label>
-                            <textarea class="form-control" id="mensaje" name="mensaje" rows="6" required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-success">Enviar consulta</button>
-                        <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
                     </form>
 
                 </div>

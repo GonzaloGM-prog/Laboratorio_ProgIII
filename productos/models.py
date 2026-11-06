@@ -3,6 +3,8 @@ from django.db import models
 class Producto(models.Model):
     artesano = models.ForeignKey('artesanos.Artesano', on_delete=models.CASCADE,
                                  related_name='productos')
+    rubro = models.ForeignKey('artesanos.Rubro', on_delete=models.PROTECT,
+                              null=True, related_name='productos')
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField(blank=True)
     precio = models.DecimalField(max_digits=10, decimal_places=2)

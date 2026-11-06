@@ -1,0 +1,13 @@
+{# Muestra el artesano dueño del producto (no editable: es el usuario logueado) #}
+<div class="ficha-artesano">
+    {% if artesano.foto %}
+        <img src="{{ artesano.foto.url }}" alt="" class="ficha-avatar">
+    {% else %}
+        <span class="ficha-avatar ficha-iniciales" aria-hidden="true">{{ artesano.nombre|slice:":1"|upper }}</span>
+    {% endif %}
+    <div>
+        <span class="ficha-etiqueta">Artesano</span>
+        <strong class="ficha-nombre">{{ artesano.nombre }}</strong>
+        <span class="ficha-detalle">{{ artesano.localidad }}{% if artesano.rubros.all %} · {{ artesano.rubros.all|join:", " }}{% endif %}</span>
+    </div>
+</div>

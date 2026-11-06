@@ -4,97 +4,142 @@
 {% block titulo %}Solicitud de Artesano{% endblock %}
 
 {% block encabezado %}
-    <h2 class="p-2">Solicitud de participación</h2>
-    <p class="p-2">Formulario para solicitar la participación como artesano en la Fiesta del Poncho.</p>
+    <span class="etiqueta-superior">Postulación de artesanos</span>
+    <h1>Solicitud de participación</h1>
+    <p>Formulario para solicitar la participación como artesano en la Fiesta del Poncho.</p>
 {% endblock %}
 
 {% block contenido_principal %}
-    <main>
+    <main class="contenedor">
 
-        <section class="formulario">
-
-            <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-                <img src="{% static 'img/formularios-de-google.png' %}" alt="Formulario" class="icono-titulo">
-                <h2 class="m-0">Datos personales</h2>
-            </div>
+        <section class="formulario tarjeta" data-revelar>
 
             <form id="formSolicitud" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
 
                 {% if form.non_field_errors %}
-                    <div class="text-danger">{{ form.non_field_errors }}</div>
+                    <div class="error-general" role="alert">{{ form.non_field_errors }}</div>
                 {% endif %}
 
-                <div class="campo">
-                    <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
-                    {{ form.nombre }}
-                    <div class="text-danger small">{{ form.nombre.errors }}</div>
+                <div class="bloque-form">
+                    <h2 class="titulo-seccion">
+                        <img src="{% static 'img/formularios-de-google.png' %}" alt="" class="icono-titulo">
+                        Datos personales
+                    </h2>
+
+                    <div class="grilla-campos">
+                        <div class="campo">
+                            <label for="{{ form.nombre.id_for_label }}">Nombre</label>
+                            {{ form.nombre }}
+                            <div class="error-campo">{{ form.nombre.errors }}</div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="{{ form.apellido.id_for_label }}">Apellido</label>
+                            {{ form.apellido }}
+                            <div class="error-campo">{{ form.apellido.errors }}</div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="{{ form.dni.id_for_label }}">DNI</label>
+                            <span class="ayuda">Solo números, entre 7 y 8 dígitos.</span>
+                            {{ form.dni }}
+                            <div class="error-campo">{{ form.dni.errors }}</div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="{{ form.email.id_for_label }}">Email</label>
+                            <span class="ayuda">Te avisaremos por este medio.</span>
+                            {{ form.email }}
+                            <div class="error-campo">{{ form.email.errors }}</div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="{{ form.telefono.id_for_label }}">Teléfono</label>
+                            <span class="ayuda">Entre 8 y 15 números, sin espacios.</span>
+                            {{ form.telefono }}
+                            <div class="error-campo">{{ form.telefono.errors }}</div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="{{ form.localidad.id_for_label }}">Localidad</label>
+                            <span class="ayuda">Tu lugar de origen.</span>
+                            {{ form.localidad }}
+                            <div class="error-campo">{{ form.localidad.errors }}</div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="campo">
-                    <label for="{{ form.apellido.id_for_label }}">Apellido:</label>
-                    {{ form.apellido }}
-                    <div class="text-danger small">{{ form.apellido.errors }}</div>
+                <div class="bloque-form">
+                    <h2 class="titulo-seccion">
+                        <img src="{% static 'img/artesano.png' %}" alt="" class="icono-titulo">
+                        Datos del emprendimiento
+                    </h2>
+
+                    <div class="campo">
+                        <label for="{{ form.rubros.id_for_label }}" id="etiqueta-rubros">Rubros</label>
+                        <span class="ayuda" data-ayuda-rubros>Podés elegir más de uno con Ctrl + clic.</span>
+                        {{ form.rubros }}
+                        <div class="error-campo">{{ form.rubros.errors }}</div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="{{ form.descripcion.id_for_label }}">Descripción del emprendimiento</label>
+                        <span class="ayuda">Contanos qué hacés, con qué técnicas y materiales (mínimo 10 caracteres).</span>
+                        {{ form.descripcion }}
+                        <div class="error-campo">{{ form.descripcion.errors }}</div>
+                    </div>
+
+                    <div class="campo campo-archivo">
+                        <label for="{{ form.foto.id_for_label }}">Foto (opcional)</label>
+                        {{ form.foto }}
+                        <div class="error-campo">{{ form.foto.errors }}</div>
+                    </div>
+
                 </div>
 
-                <div class="campo">
-                    <label for="{{ form.dni.id_for_label }}">DNI:</label>
-                    {{ form.dni }}
-                    <div class="text-danger small">{{ form.dni.errors }}</div>
+                <div class="bloque-form">
+                    <h2 class="titulo-seccion">
+                        <span class="icono-titulo icono-svg" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </span>
+                        Datos de acceso
+                    </h2>
+                    <p class="texto-suave">
+                        Con tu <strong>DNI</strong> y esta contraseña vas a poder ingresar para cargar y administrar tus productos.
+                    </p>
+
+                    <div class="grilla-campos">
+                        <div class="campo">
+                            <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                            <span class="ayuda">Mínimo 8 caracteres, que no sean solo números.</span>
+                            {{ form.password }}
+                            <div class="error-campo">{{ form.password.errors }}</div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="{{ form.password2.id_for_label }}">Repetir contraseña</label>
+                            <span class="ayuda">Escribila de nuevo para confirmar.</span>
+                            {{ form.password2 }}
+                            <div class="error-campo">{{ form.password2.errors }}</div>
+                        </div>
+                    </div>
+
+                    <div class="campo campo-check">
+                        {{ form.aceptar }}
+                        <div>
+                            <label for="{{ form.aceptar.id_for_label }}">{{ form.aceptar.label }}</label>
+                        </div>
+                        <div class="error-campo">{{ form.aceptar.errors }}</div>
+                    </div>
                 </div>
 
-                <div class="campo">
-                    <label for="{{ form.email.id_for_label }}">Email:</label>
-                    {{ form.email }}
-                    <div class="text-danger small">{{ form.email.errors }}</div>
-                </div>
-
-                <div class="campo">
-                    <label for="{{ form.telefono.id_for_label }}">Teléfono:</label>
-                    {{ form.telefono }}
-                    <div class="text-danger small">{{ form.telefono.errors }}</div>
-                </div>
-
-                <div class="campo">
-                    <label for="{{ form.localidad.id_for_label }}">Localidad:</label>
-                    {{ form.localidad }}
-                    <div class="text-danger small">{{ form.localidad.errors }}</div>
-                </div>
-
-                <br><br>
-
-                <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
-                    <img src="{% static 'img/artesano.png' %}" alt="Emprendimiento" class="icono-titulo">
-                    <h2 class="m-0">Datos del emprendimiento</h2>
-                </div>
-
-                <div class="campo">
-                    <label for="{{ form.rubros.id_for_label }}">Rubros (podés elegir más de uno con Ctrl + clic):</label>
-                    {{ form.rubros }}
-                    <div class="text-danger small">{{ form.rubros.errors }}</div>
-                </div>
-
-                <div class="campo">
-                    <label for="{{ form.descripcion.id_for_label }}">Descripción del emprendimiento:</label>
-                    {{ form.descripcion }}
-                    <div class="text-danger small">{{ form.descripcion.errors }}</div>
-                </div>
-
-                <div class="campo">
-                    <label for="{{ form.foto.id_for_label }}">Foto (opcional):</label>
-                    {{ form.foto }}
-                    <div class="text-danger small">{{ form.foto.errors }}</div>
-                </div>
-
-                <div class="campo checkbox">
-                    {{ form.aceptar }}
-                    <label for="{{ form.aceptar.id_for_label }}"> {{ form.aceptar.label }}</label>
-                    <div class="text-danger small">{{ form.aceptar.errors }}</div>
-                </div>
-
-                <div class="botones">
-                    <button type="submit">Enviar solicitud</button>
-                    <button type="reset">Limpiar formulario</button>
+                <div class="grupo-botones">
+                    <button type="reset" class="btn-poncho-borde">Limpiar formulario</button>
+                    <button type="submit" class="btn-poncho">
+                        Enviar solicitud
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    </button>
                 </div>
 
             </form>

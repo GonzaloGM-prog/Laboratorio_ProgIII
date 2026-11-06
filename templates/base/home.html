@@ -1,52 +1,99 @@
 {% extends "base/base.html" %}
 {% load static %}
 
-{% block titulo %}PONCHO DIGITAL{% endblock %}
+{% block titulo %}Inicio{% endblock %}
+
+{% block clase_portada %}portada-inicio{% endblock %}
 
 {% block encabezado %}
-    <h2 class="p-2">Bienvenido al Poncho Digital</h2>
-    <p class="p-2">Plataforma digital de artesanos de la Fiesta del Poncho</p>
+    <span class="etiqueta-superior">Fiesta Nacional e Internacional del Poncho · Catamarca</span>
+    <h1>Bienvenido al <em>Poncho Digital</em></h1>
+    <p>Plataforma digital de artesanos de la Fiesta del Poncho</p>
+    <div class="portada-acciones">
+        <a class="btn-claro" href="{% url 'productos:lista' %}">
+            Ver productos
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn-claro-borde" href="{% url 'artesanos:solicitud' %}">Postularme como artesano</a>
+    </div>
 {% endblock %}
 
 {% block contenido_principal %}
-<main>
-    <section>
-        <h2>¿Qué es Poncho Digital?</h2>
-        <p>Poncho Digital es una plataforma digital de artesanos de la Fiesta del Poncho, donde los artesanos pueden encontrar productos de alta calidad y disfrutar de la fiesta.</p>
-        <img src="{% static 'img/ft1.jpg' %}" alt="Fiesta del Poncho" class="img-fluid">
+<main class="contenedor pila">
+
+    <section class="tarjeta" data-revelar>
+        <div class="intro">
+            <div>
+                <span class="sobretitulo">La plataforma</span>
+                <h2 class="titulo-seccion">¿Qué es Poncho Digital?</h2>
+                <p>Poncho Digital es una plataforma digital de artesanos de la Fiesta del Poncho, donde los artesanos pueden encontrar productos de alta calidad y disfrutar de la fiesta.</p>
+                <p class="texto-suave">
+                    La Fiesta Nacional e Internacional del Poncho es el evento cultural más importante de nuestra provincia,
+                    atrayendo a miles de visitantes de todo el mundo para recorrer pabellones colmados de historia, tradición,
+                    textiles de primer nivel, artesanías y delicias regionales.
+                </p>
+            </div>
+            <figure class="marco-foto">
+                <img src="{% static 'img/ft1.jpg' %}" alt="Fiesta del Poncho" loading="lazy">
+            </figure>
+        </div>
     </section>
 
-    <section>
-        <h2>Sobre la Feria y la Plataforma</h2>
-        <p>
-            La Fiesta Nacional e Internacional del Poncho es el evento cultural más importante de nuestra provincia,
-            atrayendo a miles de visitantes de todo el mundo para recorrer pabellones colmados de historia, tradición,
-            textiles de primer nivel, artesanías y delicias regionales.
-        </p>
+    <section data-revelar>
+        <span class="sobretitulo">Sobre la Feria y la Plataforma</span>
+        <h2 class="titulo-seccion">Una herramienta moderna para la feria</h2>
         <p>
             <strong>Poncho Digital</strong> surge como una herramienta moderna para resolver las necesidades informáticas de la feria.
             A través de esta aplicación, los visitantes podrán:
         </p>
-        <ul>
-            <li>Localizar con precisión los stands y pabellones dentro del predio.</li>
-            <li>Conocer la trayectoria, localidad de origen y los productos de cada artesano participante.</li>
-            <li>Facilitar a los artesanos la publicación de sus catálogos de productos artesanales en tiempo real.</li>
-            <li>Permitir a los organizadores gestionar eficientemente las solicitudes y la asignación de stands.</li>
+        <ul class="funciones">
+            <li class="funcion" data-revelar style="--retraso: 0ms">
+                <span class="funcion-icono" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </span>
+                <h3>Stands y pabellones</h3>
+                <p>Localizar con precisión los stands y pabellones dentro del predio.</p>
+            </li>
+            <li class="funcion" data-revelar style="--retraso: 80ms">
+                <span class="funcion-icono" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <h3>Artesanos</h3>
+                <p>Conocer la trayectoria, localidad de origen y los productos de cada artesano participante.</p>
+            </li>
+            <li class="funcion" data-revelar style="--retraso: 160ms">
+                <span class="funcion-icono" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
+                </span>
+                <h3>Catálogos</h3>
+                <p>Facilitar a los artesanos la publicación de sus catálogos de productos artesanales en tiempo real.</p>
+            </li>
+            <li class="funcion" data-revelar style="--retraso: 240ms">
+                <span class="funcion-icono" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+                </span>
+                <h3>Gestión</h3>
+                <p>Permitir a los organizadores gestionar eficientemente las solicitudes y la asignación de stands.</p>
+            </li>
         </ul>
     </section>
 
-    <section>
-        <div class="titulo-artesano">
-            <img src="{% static 'img/artesano.png' %}" alt="Artesano" class="img-fluid">
+    <section class="llamado" data-revelar>
+        <img src="{% static 'img/artesano.png' %}" alt="Artesano" class="llamado-icono">
+        <div>
             <h2>¿Sos artesano?</h2>
+            <p>
+                Si querés participar de la Fiesta del Poncho, podés completar
+                una solicitud de participación desde nuestra plataforma.
+            </p>
         </div>
-        <p>
-            Si querés participar de la Fiesta del Poncho, podés completar
-            una solicitud de participación desde nuestra plataforma.
-        </p>
-        <div class="container">
-            <a href="{% url 'artesanos:solicitud' %}">Postularme como artesano</a>
+        <div>
+            <a class="btn-claro" href="{% url 'artesanos:solicitud' %}">
+                Postularme como artesano
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
         </div>
     </section>
+
 </main>
 {% endblock %}
