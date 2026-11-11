@@ -8,6 +8,36 @@ El sistema tiene como objetivo brindar información sobre los artesanos y produc
 
 La aplicación busca mejorar la experiencia de los visitantes y favorecer la difusión de los emprendimientos participantes.
 
+## Integrantes del equipo
+
+Cátedra Programación III · Ingeniería en Informática · Facultad de Tecnología y Ciencias Aplicadas (U.N.Ca.)
+
+| Integrante | Matrícula | Usuario de GitHub |
+|---|---|---|
+| Barros Barrionuevo, Amira Virginia | M.U. 01866 | [amiibarros](https://github.com/amiibarros) |
+| Gil Miranda, Gonzalo | M.U. 01921 | [GonzaloGM-prog](https://github.com/GonzaloGM-prog) |
+| Gallo, Jorge Joaquín | M.U. 01959 | [gallojoaquin48-lang](https://github.com/gallojoaquin48-lang) |
+| Lopez Macias, Leon | M.U. 01949 | [lopez-macias-leon](https://github.com/lopez-macias-leon) |
+
+Repositorio: https://github.com/GonzaloGM-prog/Laboratorio_ProgIII
+
+## Tecnologías y versiones
+
+| Componente | Versión |
+|---|---|
+| Python | 3.12 |
+| Django | 6.1.2 |
+| PostgreSQL | Motor de base de datos del proyecto |
+| psycopg2-binary | 2.9.13 |
+| Pillow | 12.3.0 |
+| python-decouple | 3.8 |
+| asgiref | 3.12.1 |
+| sqlparse | 0.6.0 |
+| tzdata | 2026.5 |
+| setuptools | 84.0.0 |
+
+Las versiones exactas están fijadas en `requirements.txt`.
+
 ## Cómo ejecutarlo
 
 1. Crear el entorno virtual e instalar dependencias:
