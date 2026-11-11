@@ -1,0 +1,123 @@
+{% extends "base/base.html" %}
+
+{% block titulo %}Reporte de productos{% endblock %}
+
+{% block encabezado %}
+    <span class="etiqueta-superior">Administración</span>
+    <h1>Reporte de productos</h1>
+    <p>Filtrá los productos y exportá el resultado a CSV (Excel).</p>
+{% endblock %}
+
+{% block contenido_principal %}
+    <main class="contenedor pila">
+        <section class="tarjeta">
+            <form method="get" action="{% url 'productos:reporte' %}">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label for="q" class="form-label">Nombre del producto</label>
+                        <input type="text" id="q" name="q" class="form-control" value="{{ filtros.q }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="rubro" class="form-label">Rubro</label>
+                        <select id="rubro" name="rubro" class="form-select">
+                            <option value="">Todos</option>
+                            {% for rubro in rubros %}
+                                <option value="{{ rubro.pk }}"{% if filtros.rubro == rubro.pk|stringformat:"s" %} selected{% endif %}>{{ rubro.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="artesano" class="form-label">Artesano</label>
+                        <select id="artesano" name="artesano" class="form-select">
+                            <option value="">Todos</option>
+                            {% for a in artesanos %}
+                                <option value="{{ a.pk }}"{% if filtros.artesano == a.pk|stringformat:"s" %} selected{% endif %}>{{ a.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="precio_min" class="form-label">Precio mínimo</label>
+                        <input type="number" id="precio_min" name="precio_min" min="0" step="any" class="form-control" value="{{ filtros.precio_min }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="precio_max" class="form-label">Precio máximo</label>
+                        <input type="number" id="precio_max" name="precio_max" min="0" step="any" class="form-control" value="{{ filtros.precio_max }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="orden" class="form-label">Ordenar por</label>
+                        <select id="orden" name="orden" class="form-select">
+                            <option value="nombre"{% if filtros.orden == 'nombre' or not filtros.orden %} selected{% endif %}>Nombre</option>
+                            <option value="precio"{% if filtros.orden == 'precio' %} selected{% endif %}>Precio (menor a mayor)</option>
+                            <option value="-precio"{% if filtros.orden == '-precio' %} selected{% endif %}>Precio (mayor a menor)</option>
+                            <option value="artesano"{% if filtros.orden == 'artesano' %} selected{% endif %}>Artesano</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="portada-acciones">
+                    <button type="submit" class="btn-poncho">Filtrar</button>
+                    <button type="submit" name="descargar" value="1" class="btn-poncho-borde">Exportar CSV</button>
+                    <a href="{% url 'productos:reporte' %}" class="btn-poncho-borde">Limpiar</a>
+                </div>
+            </form>
+        </section>
+
+        <section class="tarjeta">
+            <h2 class="titulo-seccion">Reporte por artesano</h2>
+            <table class="tabla-productos">
+                <caption class="visually-hidden">Reporte por artesano</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Artesano</th>
+                        <th scope="col">Localidad</th>
+                        <th scope="col">Productos</th>
+                        <th scope="col">Reporte</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in artesanos %}
+                        <tr>
+                            <td data-label="Artesano">{{ a.nombre }}</td>
+                            <td data-label="Localidad">{{ a.localidad }}</td>
+                            <td data-label="Productos">{{ a.total }}</td>
+                            <td data-label="Reporte"><a href="{% url 'productos:reporte_artesano' a.pk %}">Descargar CSV</a></td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="4" class="vacio">No hay artesanos aprobados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="tarjeta">
+            <div class="cabecera-tabla">
+                <h2 class="titulo-seccion">Resultado</h2>
+                <span class="contador-productos">{{ productos|length }} producto{{ productos|length|pluralize }}</span>
+            </div>
+            <table class="tabla-productos">
+                <caption class="visually-hidden">Reporte de productos</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Rubro</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Artesano</th>
+                        <th scope="col">Localidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in productos %}
+                        <tr>
+                            <td data-label="Producto"><span class="nombre-producto">{{ p.nombre }}</span></td>
+                            <td data-label="Rubro">{{ p.rubro|default:"—" }}</td>
+                            <td data-label="Precio">$ {{ p.precio }}</td>
+                            <td data-label="Artesano">{{ p.artesano.nombre }}</td>
+                            <td data-label="Localidad">{{ p.artesano.localidad }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="5" class="vacio">No hay productos con esos filtros.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+{% endblock %}

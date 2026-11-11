@@ -34,6 +34,7 @@
                         <th scope="col">Rubros</th>
                         <th scope="col">Localidad</th>
                         <th scope="col">Estado</th>
+                        {% if perms.stands.delete_stand %}<th scope="col">Acciones</th>{% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -48,9 +49,19 @@
                                 {% if stand.activo %}<span class="estado estado-aprobada">Activo</span>
                                 {% else %}<span class="estado estado-rechazada">Inactivo</span>{% endif %}
                             </td>
+                            {% if perms.stands.delete_stand %}
+                                <td data-label="Acciones">
+                                    <form method="post" action="{% url 'stands:eliminar' stand.pk %}"
+                                          onsubmit="return confirm('¿Eliminar el stand {{ stand.numero|escapejs }}?');">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-accion btn-accion-eliminar"
+                                                aria-label="Eliminar stand {{ stand.numero }}">Eliminar</button>
+                                    </form>
+                                </td>
+                            {% endif %}
                         </tr>
                     {% empty %}
-                        <tr><td colspan="6" class="vacio">Todavía no hay stands asignados.</td></tr>
+                        <tr><td colspan="7" class="vacio">Todavía no hay stands asignados.</td></tr>
                     {% endfor %}
                 </tbody>
             </table>

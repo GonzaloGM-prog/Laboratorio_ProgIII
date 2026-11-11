@@ -1,10 +1,15 @@
+import csv
+from decimal import Decimal, InvalidOperation
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
-from django.db.models import Q
+from django.db.models import Count, Q
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.text import slugify
 
-from artesanos.models import Rubro
+from artesanos.models import Artesano, Rubro
 from usuarios.roles import es_administrador
 from .forms import ProductoForm, ProductoAdminForm
 from .models import Producto
@@ -107,3 +112,78 @@ def eliminar(request, pk):
         producto.delete()
         messages.success(request, 'Producto eliminado correctamente.')
     return redirect('productos:lista')
+
+
+def _numero(valor):
+    """Convierte un parámetro a Decimal; devuelve None si está vacío o es inválido."""
+    try:
+        return Decimal(valor.replace(',', '.')) if valor else None
+    except InvalidOperation:
+        return None
+
+
+def _csv_productos(productos, nombre_archivo):
+    """Arma la respuesta CSV (se abre en Excel) con los productos recibidos."""
+    respuesta = HttpResponse(content_type='text/csv; charset=utf-8')
+    respuesta['Content-Disposition'] = f'attachment; filename="{nombre_archivo}.csv"'
+    respuesta.write('\ufeff')  # para que Excel respete las tildes
+    escritor = csv.writer(respuesta, delimiter=';')
+    escritor.writerow(['Producto', 'Rubro', 'Precio', 'Artesano', 'Localidad'])
+    for p in productos:
+        escritor.writerow([p.nombre, p.rubro or '', p.precio, p.artesano.nombre, p.artesano.localidad])
+    return respuesta
+
+
+@login_required
+@permission_required('productos.view_producto', raise_exception=True)
+def reporte_productos(request):
+    """Reporte parametrizado de productos (solo administradores).
+
+    Parámetros GET: q, rubro, artesano, precio_min, precio_max, orden.
+    Sin 'descargar' muestra una vista previa; con 'descargar=1' entrega el CSV.
+    """
+    if not es_administrador(request.user):
+        raise PermissionDenied
+
+    filtros = {clave: request.GET.get(clave, '').strip()
+               for clave in ('q', 'rubro', 'artesano', 'precio_min', 'precio_max', 'orden')}
+
+    productos = Producto.objects.select_related('artesano__localidad', 'rubro')
+    if filtros['q']:
+        productos = productos.filter(nombre__icontains=filtros['q'])
+    if filtros['rubro'].isdigit():
+        productos = productos.filter(rubro_id=filtros['rubro'])
+    if filtros['artesano'].isdigit():
+        productos = productos.filter(artesano_id=filtros['artesano'])
+    minimo, maximo = _numero(filtros['precio_min']), _numero(filtros['precio_max'])
+    if minimo is not None:
+        productos = productos.filter(precio__gte=minimo)
+    if maximo is not None:
+        productos = productos.filter(precio__lte=maximo)
+
+    ordenes = {'nombre': 'nombre', 'precio': 'precio', '-precio': '-precio',
+               'artesano': 'artesano__nombre'}
+    productos = productos.order_by(ordenes.get(filtros['orden'], 'nombre'))
+
+    if request.GET.get('descargar'):
+        return _csv_productos(productos, 'reporte_productos')
+
+    return render(request, 'productos/reporte.html', {
+        'productos': productos,
+        'filtros': filtros,
+        'rubros': Rubro.objects.order_by('nombre'),
+        'artesanos': (Artesano.objects.filter(solicitudes__estado='aprobada').distinct()
+                      .annotate(total=Count('productos', distinct=True)).order_by('nombre')),
+    })
+
+
+@login_required
+@permission_required('productos.view_producto', raise_exception=True)
+def reporte_artesano(request, pk):
+    """Reporte (CSV) de los productos de un solo artesano. Solo administradores."""
+    if not es_administrador(request.user):
+        raise PermissionDenied
+    artesano = get_object_or_404(Artesano, pk=pk)
+    productos = (Producto.objects.filter(artesano=artesano)
+                 .select_related('artesano__localidad', 'rubro').order_by('nombre'))
+    return _csv_productos(productos, f'reporte_{slugify(artesano.nombre)}')
